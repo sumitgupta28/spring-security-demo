@@ -13,32 +13,45 @@ Basic Security added in SpringSecurityConfig
 
 ============
 
-Start the application and run below curl commands
+#Build application via docker
 
-# get Book without credentials
+##Perform below 
+
+$ docker build -t spring-security-demo:latest .
+
+##-- once successfully completed , verify the image
+$ docker images
+REPOSITORY                          TAG                 IMAGE ID            CREATED             SIZE
+spring-security-demo                latest              e39d1f1ddc77        8 minutes ago       553MB
+
+##-- run the container 
+$ docker container run -dt --name spring-security-demo -p 8080:8080 spring-security-demo
+86607512f640328e75ebfd9f1ca3ab7c49fdeeaa81937b55d914341717e4e1a1
+
+##-- verify Statup logs
+$ docker container logs spring-security-demo
+
+
+#Test
+## get Book without credentials
 curl -s localhost:8080/users
 
 {"timestamp":"2020-08-05T03:24:22.665+00:00","status":401,"error":"Unauthorized","message":"","path":"/books"}
 
-# post Book without credentials
+## post Book without credentials
 
 curl -sX POST localhost:8080/users -H "Content-type:application/json" -d {\"firstName\":\"Sumit\",\"lastName\":\"Gupta\",\"age\":\"35\"}
 
 {"timestamp":"2020-08-05T03:53:55.283+00:00","status":401,"error":"Unauthorized","message":"","path":"/users"}
 
 
-# get Book with credentials
+## get Book with credentials
 curl -s localhost:8080/users -u user:password
 
 
-# post Book with credentials user as "user"
+## post Book with credentials user as "user"
 curl -sX POST localhost:8080/users -H "Content-type:application/json" -d {\"firstName\":\"Sumit\",\"lastName\":\"Gupta\",\"age\":\"35\"} -u user:password
 {"timestamp":"2020-08-05T03:53:20.334+00:00","status":403,"error":"Forbidden","message":"","path":"/users"}
 
-# post Book with credentials user as "admin"
+## post Book with credentials user as "admin"
 curl -sX POST localhost:8080/users -H "Content-type:application/json" -d {\"firstName\":\"Sumit\",\"lastName\":\"Gupta\",\"age\":\"35\"} -u admin:password
-
-
-
-
-
