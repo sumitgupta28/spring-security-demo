@@ -1,4 +1,4 @@
-#Secure the endpoins with HTTP Basic authentication
+# Secure the endpoins with HTTP Basic authentication
 
 ============
 
@@ -13,26 +13,26 @@ Basic Security added in SpringSecurityConfig
 
 ============
 
-#Build application via docker
+# Build application via docker
 
-##Perform below 
+## Perform below 
 
 $ docker build -t spring-security-demo:latest .
 
-##-- once successfully completed , verify the image
+## Once successfully completed , verify the image
 $ docker images
 REPOSITORY                          TAG                 IMAGE ID            CREATED             SIZE
 spring-security-demo                latest              e39d1f1ddc77        8 minutes ago       553MB
 
-##-- run the container 
+## Run the container 
 $ docker container run -dt --name spring-security-demo -p 8080:8080 spring-security-demo
 86607512f640328e75ebfd9f1ca3ab7c49fdeeaa81937b55d914341717e4e1a1
 
-##-- verify Statup logs
+## verify Statup logs
 $ docker container logs spring-security-demo
 
 
-#Test
+# Test
 ## get Book without credentials
 curl -s localhost:8080/users
 
