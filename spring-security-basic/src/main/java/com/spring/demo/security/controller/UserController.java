@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.demo.security.db.entity.User;
 import com.spring.demo.security.db.repo.UserRepository;
-import com.spring.demo.security.exception.BookNotFoundException;
-import com.spring.demo.security.exception.BookUnSupportedFieldPatchException;
+import com.spring.demo.security.exception.UserNotFoundException;
+import com.spring.demo.security.exception.UserUnSupportedFieldPatchException;
 
 @RestController
 @Validated
-public class BookController {
+public class UserController {
 
 	@Autowired
 	private UserRepository repository;
@@ -48,7 +48,7 @@ public class BookController {
 	// Find
 	@GetMapping("/users/{id}")
 	User findOne(@PathVariable @Min(1) Long id) {
-		return repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+		return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 	}
 
 	// Save or update
@@ -80,11 +80,11 @@ public class BookController {
 				// where id = :id
 				return repository.save(x);
 			} else {
-				throw new BookUnSupportedFieldPatchException(update.keySet());
+				throw new UserUnSupportedFieldPatchException(update.keySet());
 			}
 
 		}).orElseGet(() -> {
-			throw new BookNotFoundException(id);
+			throw new UserNotFoundException(id);
 		});
 
 	}
