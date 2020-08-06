@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
@@ -28,6 +30,9 @@ import com.spring.demo.security.exception.UserUnSupportedFieldPatchException;
 @RestController
 @Validated
 public class UserController {
+	
+	
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserRepository repository;
@@ -41,8 +46,9 @@ public class UserController {
 	// Save
 	@PostMapping("/users")
 	@ResponseStatus(HttpStatus.CREATED)
-	User newBook(@Valid @RequestBody User newBook) {
-		return repository.save(newBook);
+	User newBook(@Valid @RequestBody User user) {
+		logger.debug(" New User {} " , user.toString());
+		return repository.save(user);
 	}
 
 	// Find
@@ -53,23 +59,23 @@ public class UserController {
 
 	// Save or update
 	@PutMapping("/users/{id}")
-	User saveOrUpdate(@RequestBody User newBook, @PathVariable Long id) {
-
+	User saveOrUpdate(@RequestBody User user, @PathVariable Long id) {
+		logger.debug(" saveOrUpdate {} " , user.toString());
 		return repository.findById(id).map(x -> {
-			x.setFirstName(newBook.getFirstName());
-			x.setLastName(newBook.getLastName());
-			x.setAge(newBook.getAge());
+			x.setFirstName(user.getFirstName());
+			x.setLastName(user.getLastName());
+			x.setAge(user.getAge());
 			return repository.save(x);
 		}).orElseGet(() -> {
-			newBook.setId(id);
-			return repository.save(newBook);
+			user.setId(id);
+			return repository.save(user);
 		});
 	}
 
 	// update age only
 	@PatchMapping("/users/{id}")
 	User patch(@RequestBody Map<String, String> update, @PathVariable Long id) {
-
+		logger.debug(" patch {} " , update);
 		return repository.findById(id).map(x -> {
 
 			String age = update.get("age");
@@ -90,7 +96,8 @@ public class UserController {
 	}
 
 	@DeleteMapping("/users/{id}")
-	void deleteBook(@PathVariable Long id) {
+	void deleteUser(@PathVariable Long id) {
+		logger.debug(" deleteUser {} " , id);
 		repository.deleteById(id);
 	}
 

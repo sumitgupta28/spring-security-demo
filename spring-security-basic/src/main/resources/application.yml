@@ -1,8 +1,9 @@
 logging:
+  level.com.spring.demo.security: DEBUG
   level.org.springframework: INFO
-  level.root: ERROR
-server:
-  error.include-stacktrace: never
+  level.root: INFO
+  
+
 spring:
   profiles:
     active: local

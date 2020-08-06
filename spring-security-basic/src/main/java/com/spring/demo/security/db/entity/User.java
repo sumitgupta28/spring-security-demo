@@ -7,13 +7,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-/*@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode*/
 @Entity
 public class User {
 	@Id
@@ -27,7 +20,6 @@ public class User {
 	private String lastName;
 
 	@NotNull(message = "Please provide a age")
-	@Min(value = 10)
 	private Integer age;
 
 	// avoid this "No default constructor for entity"
@@ -84,5 +76,14 @@ public class User {
 	public void setAge(Integer age) {
 		this.age = age;
 	}
+
+	@Override
+	public String toString() {
+		return "User [" + (id != null ? "id=" + id + ", " : "")
+				+ (firstName != null ? "firstName=" + firstName + ", " : "")
+				+ (lastName != null ? "lastName=" + lastName + ", " : "") + (age != null ? "age=" + age : "") + "]";
+	}
+	
+	
 
 }
